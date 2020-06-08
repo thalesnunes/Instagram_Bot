@@ -48,11 +48,11 @@ class InstagramBot:
         self.driver.find_element_by_name('password').send_keys(self.password)
         sleep(1)
         self.driver.find_elements_by_xpath("//div[contains(text(), 'Entrar')]")[0].click()
-        sleep(2)
-        self.driver.find_elements_by_xpath("//button[contains(text(), 'Agora não')]")[0].click()
+        sleep(4)
+        self.driver.find_element_by_xpath("//button[contains(text(), 'Agora não')]").click()
         sleep(2)
         try:
-            self.driver.find_elements_by_xpath("//button[contains(text(), 'Agora não')]")[0].click()
+            self.driver.find_element_by_xpath("//button[contains(text(), 'Agora não')]").click()
         except:
             pass
 
@@ -137,8 +137,8 @@ class InstagramBot:
         '''
 
         self.driver.find_element_by_xpath('//a[@href="/explore/"]').click()
-        sleep(7)
-
+        sleep(15)
+        
         self.driver.find_element_by_xpath('//a[@href="/explore/people/"]').click()
         sleep(2)
 
