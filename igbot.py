@@ -95,7 +95,7 @@ class InstagramBot:
                 comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
                 text = f'{" ".join(random.sample(users, n_users))} {msg}'
                 self.person_typing(text, comm)
-                sleep(random.randint(30, 90))
+                sleep(random.randint(45, 120))
                 self.driver.find_element_by_xpath('//button[contains(text(), "Publicar")]').click()
                 n_interactions += 1
             except Exception as e:
@@ -282,13 +282,14 @@ if __name__ == '__main__':
 
     if choice == 4:
 
-        users = ['@thalesnunes1', '@_nataliaaguiar', '@sunmoonphases']
+        users = ['@_nataliaaguiar', '@sunmoonphases']
         post_url = str(input("Paste the posts' url: "))
+        n_users = int(input('How many users do you have to tag? '))
         
         igbot = InstagramBot(ig_username, ig_password)
         sleep(2)
 
-        igbot.comment(users, post_url)
+        igbot.comment(users, post_url, n_users)
         sleep(3)
 
         igbot.driver.quit()
