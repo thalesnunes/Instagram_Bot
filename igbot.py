@@ -220,7 +220,10 @@ class InstagramBot:
             like = self.driver.find_element_by_xpath('//span[@class="fr66n"]//button[@class="wpO6b "]')
             self.driver.execute_script("arguments[0].scrollIntoView(false);", like)
             sleep(random.randint(40, 60)/10)
-            self.driver.find_element_by_xpath('//span[@class="fr66n"]//button[@class="wpO6b "]').click()
+            try:
+                self.driver.find_element_by_xpath('//span[@class="fr66n"]//button[@class="wpO6b "]').click()
+            except:
+                pass
             sleep(random.randint(10, 40)/10)
             n_likes -= 1
             if n_likes == 0:
