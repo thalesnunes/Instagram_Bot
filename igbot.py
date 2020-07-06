@@ -136,11 +136,8 @@ class InstagramBot:
             n_profiles:int: number of profiles to be followed
         '''
 
-        self.driver.find_element_by_xpath('//a[@href="/explore/"]').click()
-        sleep(15)
-        
         self.driver.find_element_by_xpath('//a[@href="/explore/people/"]').click()
-        sleep(2)
+        sleep(4)
 
         class_user = '                    Igw0E   rBNOH        eGOV_     ybXk5    _4EzTm                                                                                   XfCBB          HVWg4                 '
         class_followers = '_7UhW9  PIoXz       MMzan   _0PwGv            fDxYl     '
