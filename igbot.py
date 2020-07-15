@@ -140,7 +140,7 @@ class InstagramBot:
         sleep(4)
 
         class_user = '                    Igw0E   rBNOH        eGOV_     ybXk5    _4EzTm                                                                                   XfCBB          HVWg4                 '
-        class_followers = '_7UhW9  PIoXz       MMzan   _0PwGv            fDxYl     '
+        class_followers = '_7UhW9  PIoXz       MMzan   _0PwGv        uL8Hv         '
         unwanted = ['Seguido por thalesnunes1 + mais 1 pessoas', 'Seguido por thalesnunes1',
                     'Seguido por _nataliaaguiar + mais 1 pessoas', 'Seguido por _nataliaaguiar']
         
