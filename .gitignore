@@ -3,3 +3,4 @@ test.py
 secrets.py
 debug.log
 chromedriver.exe
+.vscode
