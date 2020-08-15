@@ -8,4 +8,5 @@ Instagram Bot includes liking, commenting an individual post, and following peop
 
 
 `username = '%YOUR_USERNAME%'`
+
 `password = '%YOUR_PASSWORD%'`
