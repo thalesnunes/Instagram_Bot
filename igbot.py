@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
 import random
-from secrets import ig_username, ig_password
+from secrets import ig_username, ig_password, users
 from ferramentas import header, menu
 
 
@@ -282,9 +282,8 @@ if __name__ == '__main__':
 
     if choice == 4:
 
-        users = ['@_nataliaaguiar', '@sunmoonphases']
         post_url = str(input("Paste the posts' url: "))
-        n_users = int(input('How many users do you have to tag? '))
+        n_users = int(input('How many users do you have to tag in a single post? '))
         
         igbot = InstagramBot(ig_username, ig_password)
         sleep(2)
