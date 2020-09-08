@@ -88,14 +88,15 @@ class InstagramBot:
         while True:
             if n_interactions == 30:
                 n_interactions = 0
-                sleep(random.randint(900, 1200))
+                sleep(random.randint(900, 1800))
             try:
+                sleep(1)
                 self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]').click()
                 sleep(random.randint(1, 4))
                 comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
                 text = f'{" ".join(random.sample(users, n_users))} {msg}'
                 self.person_typing(text, comm)
-                sleep(random.randint(45, 120))
+                sleep(random.randint(60, 180))
                 self.driver.find_element_by_xpath('//button[contains(text(), "Publicar")]').click()
                 n_interactions += 1
             except Exception as e:
