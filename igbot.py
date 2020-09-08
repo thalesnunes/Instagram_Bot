@@ -88,7 +88,7 @@ class InstagramBot:
         while True:
             if n_interactions == 30:
                 n_interactions = 0
-                sleep(random.randint(900, 1800))
+                sleep(random.randint(1200, 1800))
             try:
                 sleep(1)
                 self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]').click()
