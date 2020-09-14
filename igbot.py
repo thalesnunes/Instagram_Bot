@@ -97,17 +97,20 @@ class InstagramBot:
                 self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]').click()
                 sleep(random.randint(1, 4))
                 comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
-                text = f'{" ".join(random.sample(users, n_users))} {msg}'
+                users, now_tagging = self.user_chooser(users, n_users)
+                text = f'{" ".join(now_tagging)} {msg}'
                 self.person_typing(text, comm)
-                sleep(random.randint(60, 180))
+                sleep(random.randint(40, 60))
                 self.driver.find_element_by_xpath('//button[contains(text(), "Publicar")]').click()
-                n_interactions += 1
+                sleep(2)
             except Exception as e:
                 print(e)
+            else:
+                n_interactions += 1
 
 
     @staticmethod
-    def person_typing(sentence, writing_box):
+    def person_typing(sentence: str, writing_box) -> None:
         '''
         Types letter by letter, with random intervals of time in between
 
@@ -118,6 +121,34 @@ class InstagramBot:
         for letter in sentence:
             writing_box.send_keys(letter)
             sleep(random.randint(1, 5)/20)
+
+    
+    @staticmethod
+    def user_chooser(users_to_tag, n_users):
+        '''Chooses users in the list of users and removes them from current list.
+        When list is empty, it goes back to being full.
+
+        Args:
+            users_to_tag (list): list of current users.
+            n_users (int): number of users to choose from the list.
+        Return:
+            None
+        '''
+        if len(users_to_tag) < n_users:
+            global users
+            users_to_tag = users[:]
+        now_tagging = random.sample(users_to_tag, n_users)
+        for single in now_tagging:
+            users_to_tag.remove(single)
+
+        return users_to_tag, now_tagging
+
+    
+    # def chooser_tester(self, cached, n_users):
+    #     while True:
+    #         cached, now = self.user_chooser(cached, n_users)
+    #         print(cached)
+    #         print(len(cached))
 
     
     def scroll_end_page(self):
