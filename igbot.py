@@ -81,16 +81,14 @@ class InstagramBot:
 
         self.driver.get(post_url)
         sleep(2)
-
-        comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
-        self.driver.execute_script("arguments[0].scrollIntoView(false);", comm)
+        self.go_to_commentbox()        
         n_interactions = 0
+        n_errors = 0
         while True:
-            if n_interactions == 30:
+            if n_interactions == 45:
                 n_interactions = 0
                 self.driver.refresh()
-                comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
-                self.driver.execute_script("arguments[0].scrollIntoView(false);", comm)
+                self.go_to_commentbox()
                 sleep(random.randint(1200, 1800))
             try:
                 sleep(1)
@@ -105,9 +103,19 @@ class InstagramBot:
                 sleep(2)
             except Exception as e:
                 print(e)
+                n_errors += 1
+                if n_errors >= 5:
+                    self.driver.refresh()
+                    self.go_to_commentbox()
+                    n_errors = 0
             else:
                 n_interactions += 1
+                n_errors = 0
 
+    
+    def go_to_commentbox(self):
+        comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
+        self.driver.execute_script("arguments[0].scrollIntoView(false);", comm)
 
     @staticmethod
     def person_typing(sentence: str, writing_box) -> None:
