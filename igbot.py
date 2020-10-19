@@ -1,3 +1,4 @@
+from typing import Any, List
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from time import sleep
@@ -9,7 +10,7 @@ from ferramentas import header, menu
 
 class InstagramBot:
 
-    def __init__(self, username, password):
+    def __init__(self, username: str, password: str):
         '''
         Bot that interacts with Instagram, it can comment, like follow and unfollow
 
@@ -57,7 +58,7 @@ class InstagramBot:
             pass
 
 
-    def go_to_profile(self, user):
+    def go_to_profile(self, user: str):
         '''
         Goes to the given profile page 
         
@@ -68,7 +69,7 @@ class InstagramBot:
         self.driver.get(f'{self.base_url}/{user}/')
 
 
-    def comment(self, users, post_url, n_users=1, msg=''):
+    def comment(self, users: List[str], post_url: str, n_users: int=1, msg: str=''):
         '''
         Comments the only post in a page, choosing a random string from the users list
 
@@ -118,7 +119,7 @@ class InstagramBot:
         self.driver.execute_script("arguments[0].scrollIntoView(false);", comm)
 
     @staticmethod
-    def person_typing(sentence: str, writing_box) -> None:
+    def person_typing(sentence: str, writing_box: Any):
         '''
         Types letter by letter, with random intervals of time in between
 
@@ -132,7 +133,7 @@ class InstagramBot:
 
     
     @staticmethod
-    def user_chooser(users_to_tag, n_users):
+    def user_chooser(users_to_tag: List[str], n_users: int):
         '''Chooses users in the list of users and removes them from current list.
         When list is empty, it goes back to being full.
 
@@ -171,7 +172,7 @@ class InstagramBot:
             sleep(random.randint(3, 5))
 
 
-    def follow_profiles(self, n_profiles):
+    def follow_profiles(self, n_profiles: int):
         '''
         Follows number of profiles going to the Explore page. Excludes unwanted profiles
 
@@ -214,7 +215,7 @@ class InstagramBot:
                 break
 
     
-    def like_pics_feed(self, n_pics):
+    def like_pics_feed(self, n_pics: int):
 
         while n_pics > 0:
             for i in range (4):
@@ -233,7 +234,7 @@ class InstagramBot:
             self.driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
     
-    def like_pics_hash(self, n_likes, hash_pics):
+    def like_pics_hash(self, n_likes: int, hash_pics: str):
 
         self.driver.find_element_by_xpath('//span[contains(text(), "Pesquisar")]').click()
         sleep(1)
