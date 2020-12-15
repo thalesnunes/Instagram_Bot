@@ -85,6 +85,7 @@ class InstagramBot:
         self.go_to_commentbox()        
         n_interactions = 0
         n_errors = 0
+        using_users = users[:]
         while True:
             if n_interactions == 45:
                 n_interactions = 0
@@ -96,7 +97,7 @@ class InstagramBot:
                 self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]').click()
                 sleep(random.randint(1, 4))
                 comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
-                users, now_tagging = self.user_chooser(users, n_users)
+                using_users, now_tagging = self.user_chooser(using_users, n_users)
                 text = f'{" ".join(now_tagging)} {msg}'
                 self.person_typing(text, comm)
                 sleep(random.randint(40, 60))
