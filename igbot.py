@@ -274,19 +274,21 @@ class InstagramBot:
                 continue
 
 
+def save_data(post_url: str, n_users: int):
 
-if __name__ == '__main__':
+    with open('history.txt', 'w') as file:
+        file.write(f'{post_url} {n_users}')
 
-    header('INSTAGRAM BOT')
-    menu(['Follow Profiles', 'Like Posts from Feed', 'Like Posts from a Hashtag', 'Comment on a Post'])
+
+def read_data():
+
+    with open('history.txt', 'r') as file:
+        last_url, last_n_users = file.read().split()
     
-    while True:
-        try:
-            choice = int(input('What do you want to do? '))
-        except:
-            print('ENTER A VALID NUMBER!')
-        else:
-            break
+    return last_url, int(last_n_users)
+
+
+def function_chooser(choice: int):
 
     if choice == 1:
 
@@ -327,9 +329,21 @@ if __name__ == '__main__':
 
     if choice == 4:
 
-        post_url = str(input("Paste the posts' url: "))
-        n_users = int(input('How many users do you have to tag in a single post? '))
-        
+        while True:
+            last_choice = str(input('Do you want to use the last values? [Y/n]: ')).lower()
+            if last_choice == 'y' or last_choice == 'n':
+                break
+            else:
+                print('ENTER A VALID ANSWER!')
+
+        if last_choice == 'y':
+            post_url, n_users = read_data()
+
+        else:
+            post_url = str(input("Paste the posts' url: "))
+            n_users = int(input('How many users do you have to tag in a single post? '))
+            save_data(post_url, n_users)
+            
         igbot = InstagramBot(ig_username, ig_password)
         sleep(2)
 
@@ -337,3 +351,19 @@ if __name__ == '__main__':
         sleep(3)
 
         igbot.driver.quit()
+
+
+if __name__ == '__main__':
+
+    header('INSTAGRAM BOT')
+    menu(['Follow Profiles', 'Like Posts from Feed', 'Like Posts from a Hashtag', 'Comment on a Post'])
+    
+    while True:
+        try:
+            choice = int(input('What do you want to do? '))
+        except:
+            print('ENTER A VALID NUMBER!')
+        else:
+            break
+    
+    function_chooser(choice)
