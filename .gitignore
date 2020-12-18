@@ -4,3 +4,4 @@ secrets.py
 debug.log
 chromedriver.exe
 .vscode
+history.txt
