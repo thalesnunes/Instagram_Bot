@@ -274,18 +274,18 @@ class InstagramBot:
                 continue
 
 
-def save_data(post_url: str, n_users: int):
+def save_data(post_url: str, n_users: int, msg: str):
 
     with open('history.txt', 'w') as file:
-        file.write(f'{post_url} {n_users}')
+        file.write(f'{post_url} {n_users} {msg}')
 
 
 def read_data():
 
     with open('history.txt', 'r') as file:
-        last_url, last_n_users = file.read().split()
+        last_url, last_n_users, msg = file.read().strip().split()
     
-    return last_url, int(last_n_users)
+    return last_url, int(last_n_users), msg
 
 
 def function_chooser(choice: int):
@@ -337,17 +337,29 @@ def function_chooser(choice: int):
                 print('ENTER A VALID ANSWER!')
 
         if last_choice == 'y':
-            post_url, n_users = read_data()
+            post_url, n_users, msg = read_data()
 
         else:
             post_url = str(input("Paste the posts' url: "))
             n_users = int(input('How many users do you have to tag in a single post? '))
-            save_data(post_url, n_users)
+
+            while True:
+                if_msg = str(input('Is there a message to append? [Y/n]: ')).lower()
+                if if_msg == 'y' or if_msg == 'n':
+                    break
+                else:
+                    print('ENTER A VALID ANSWER!')
+            if if_msg == 'y':
+                msg = str(input('What is the message? '))
+            else:
+                msg = ''
+
+            save_data(post_url, n_users, msg)
             
         igbot = InstagramBot(ig_username, ig_password)
         sleep(2)
 
-        igbot.comment(users, post_url, n_users)
+        igbot.comment(users, post_url, n_users, msg)
         sleep(3)
 
         igbot.driver.quit()
