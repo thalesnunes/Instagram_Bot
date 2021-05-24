@@ -17,14 +17,14 @@ class InstagramBot:
         Args:
             username:string: username to an Instagram account
             password:string: password to an Instagram account
-            
+
         Attributes:
             username:string: username given
             password:string: password given
             base_url:string: instagram website (https://www.instagram.com)
             driver:selenium.webdriver.Chrome: driver that performs actions in the browser
         '''
-        
+
         self.username = username
         self.password = password
         self.base_url = 'https://www.instagram.com'
@@ -41,7 +41,7 @@ class InstagramBot:
         '''
         Logs in to the instagram account with the given username and password
 
-        Args:   
+        Args:
             None
         '''
 
@@ -60,8 +60,8 @@ class InstagramBot:
 
     def go_to_profile(self, user: str):
         '''
-        Goes to the given profile page 
-        
+        Goes to the given profile page
+
         Args:
             user:str: profile to go to
         '''
@@ -82,7 +82,7 @@ class InstagramBot:
 
         self.driver.get(post_url)
         sleep(2)
-        self.go_to_commentbox()        
+        self.go_to_commentbox()
         n_interactions = 0
         n_errors = 0
         using_users = users[:]
@@ -114,7 +114,7 @@ class InstagramBot:
                 n_interactions += 1
                 n_errors = 0
 
-    
+
     def go_to_commentbox(self):
         comm = self.driver.find_element_by_xpath('//textarea[@aria-label="Adicione um comentário..."]')
         self.driver.execute_script("arguments[0].scrollIntoView(false);", comm)
@@ -132,7 +132,7 @@ class InstagramBot:
             writing_box.send_keys(letter)
             sleep(random.randint(1, 5)/20)
 
-    
+
     @staticmethod
     def user_chooser(users_to_tag: List[str], n_users: int):
         '''Chooses users in the list of users and removes them from current list.
@@ -153,14 +153,14 @@ class InstagramBot:
 
         return users_to_tag, now_tagging
 
-    
+
     # def chooser_tester(self, cached, n_users):
     #     while True:
     #         cached, now = self.user_chooser(cached, n_users)
     #         print(cached)
     #         print(len(cached))
 
-    
+
     def scroll_end_page(self):
 
         last_height, height = 0, 1
@@ -188,14 +188,14 @@ class InstagramBot:
         class_followers = '_7UhW9  PIoXz       MMzan   _0PwGv        uL8Hv         '
         unwanted = ['Seguido por thalesnunes1 + mais 1 pessoas', 'Seguido por thalesnunes1',
                     'Seguido por _nataliaaguiar + mais 1 pessoas', 'Seguido por _nataliaaguiar']
-        
+
         while n_profiles > 0:
-            
+
             self.scroll_end_page()
-            
+
             blocks = self.driver.find_elements_by_xpath(f'//div[@class="{class_user}"]')
             unique_tags = [elem.get_attribute('aria-labelledby') for elem in blocks]
-            
+
             for tag in unique_tags:
                 following = self.driver.find_element_by_xpath(f'//div[@aria-labelledby="{tag}"]//div[@class="{class_followers}"]').text
                 if following in unwanted:
@@ -215,7 +215,7 @@ class InstagramBot:
             else:
                 break
 
-    
+
     def like_pics_feed(self, n_pics: int):
 
         while n_pics > 0:
@@ -234,7 +234,7 @@ class InstagramBot:
                     continue
             self.driver.execute_script("window.scrollTo(0,document.body.scrollHeight)")
 
-    
+
     def like_pics_hash(self, n_likes: int, hash_pics: str):
 
         self.driver.find_element_by_xpath('//span[contains(text(), "Pesquisar")]').click()
@@ -255,7 +255,7 @@ class InstagramBot:
             hrefs = self.driver.find_elements_by_tag_name('a')
             pic_href = [elem.get_attribute('href') for elem in hrefs if '/p/' in elem.get_attribute('href')]
 
-        
+
         for href in pic_href:
 
             self.driver.get(href)
@@ -283,8 +283,13 @@ def save_data(post_url: str, n_users: int, msg: str):
 def read_data():
 
     with open('history.txt', 'r') as file:
-        last_url, last_n_users, msg = file.read().strip().split()
-    
+        cached_data = file.read().strip().split()
+    if len(cached_data) > 2:
+        last_url, last_n_users, msg = cached_data
+    else:
+        last_url, last_n_users = cached_data
+        msg = ''
+
     return last_url, int(last_n_users), msg
 
 
@@ -355,7 +360,7 @@ def function_chooser(choice: int):
                 msg = ''
 
             save_data(post_url, n_users, msg)
-            
+
         igbot = InstagramBot(ig_username, ig_password)
         sleep(2)
 
@@ -369,7 +374,7 @@ if __name__ == '__main__':
 
     header('INSTAGRAM BOT')
     menu(['Follow Profiles', 'Like Posts from Feed', 'Like Posts from a Hashtag', 'Comment on a Post'])
-    
+
     while True:
         try:
             choice = int(input('What do you want to do? '))
@@ -377,5 +382,5 @@ if __name__ == '__main__':
             print('ENTER A VALID NUMBER!')
         else:
             break
-    
+
     function_chooser(choice)
