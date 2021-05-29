@@ -29,7 +29,7 @@ class InstagramBot:
         self.password = password
         self.base_url = 'https://www.instagram.com'
 
-        self.driver = webdriver.Chrome('chromedriver.exe')
+        self.driver = webdriver.Chrome()
         self.driver.get(self.base_url)
 
         sleep(1)
